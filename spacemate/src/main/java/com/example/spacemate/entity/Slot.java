@@ -1,6 +1,7 @@
 package com.example.spacemate.entity;
 
 import com.example.spacemate.enums.SlotStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ import jakarta.persistence.*;
         )
     }
 )
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Slot {
 
     @Id
@@ -28,8 +30,9 @@ public class Slot {
     @Column(nullable = false)
     private SlotStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parking_lot_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ParkingLot parkingLot;
 
     public Slot() {

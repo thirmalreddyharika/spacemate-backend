@@ -1,12 +1,14 @@
 package com.example.spacemate.entity;
 
 import com.example.spacemate.enums.LotStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "parking_lots")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ParkingLot {
 
     @Id
@@ -29,8 +31,9 @@ public class ParkingLot {
     @Column(nullable = false)
     private LotStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "password"})
     private User owner;
 
     public ParkingLot() {
