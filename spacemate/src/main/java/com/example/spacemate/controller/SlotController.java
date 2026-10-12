@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/slots")
-@CrossOrigin(origins = "http://localhost:5173")
 public class SlotController {
 
     private final SlotService slotService;

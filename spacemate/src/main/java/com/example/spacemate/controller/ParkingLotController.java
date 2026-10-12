@@ -2,7 +2,9 @@ package com.example.spacemate.controller;
 
 import com.example.spacemate.dto.CreateParkingLotRequest;
 import com.example.spacemate.entity.ParkingLot;
+import com.example.spacemate.entity.Slot;
 import com.example.spacemate.service.ParkingLotService;
+import com.example.spacemate.service.SlotService;
 
 import jakarta.validation.Valid;
 
@@ -13,17 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/lots")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping({"/api/lots", "/api/parking-lots"})
 public class ParkingLotController {
 
     private final ParkingLotService parkingLotService;
+    private final SlotService slotService;
 
     public ParkingLotController(
-            ParkingLotService parkingLotService) {
+            ParkingLotService parkingLotService,
+            SlotService slotService) {
 
-        this.parkingLotService =
-                parkingLotService;
+        this.parkingLotService = parkingLotService;
+        this.slotService = slotService;
     }
 
     @PostMapping
@@ -65,6 +68,15 @@ public class ParkingLotController {
 
         return ResponseEntity.ok(
                 parkingLotService.getLot(id)
+        );
+    }
+
+    @GetMapping({"/{id}/slots", "/lot/{id}/slots"})
+    public ResponseEntity<List<Slot>> getLotSlots(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                slotService.getSlots(id)
         );
     }
 
